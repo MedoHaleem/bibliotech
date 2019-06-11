@@ -1,4 +1,6 @@
 'use strict';
+import bcrypt from "bcrypt";
+
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define('User', {
         name: {
@@ -28,9 +30,19 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.ENUM,
             values: ["student", "academic", "administrator"]
         }
-    }, {});
+    }, {
+        hooks: {
+            beforeCreate: user => {
+                const salt = bcrypt.genSaltSync();
+                user.password = bcrypt.hashSync(user.password, salt);
+            }
+        }
+    });
     User.associate = function (models) {
         // associations can be defined here
+    };
+    User.isPassword = (encodedPassword, password) => {
+        return bcrypt.compareSync(password, encodedPassword);
     };
     return User;
 };

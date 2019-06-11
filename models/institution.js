@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     emailDomain: {
-      type: DataType.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: true

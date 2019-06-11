@@ -24,6 +24,14 @@ module.exports = {
       role: {
         type: Sequelize.ENUM,
         values: ["student", "academic", "administrator"]
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE
       }
     });
   },
