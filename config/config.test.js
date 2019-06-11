@@ -1,6 +1,7 @@
 const dbConfig = require("./dbconfig");
 
 module.exports = {
-    ...dbConfig,
-    port: 4000
+    port: 4000,
+    jwtSecret: "BibL0T@ch-Test-AP1",
+    jwtSession: {session: false}
 };
