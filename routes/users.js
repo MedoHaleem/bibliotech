@@ -3,6 +3,7 @@ import JSend from '../services/Jsend'
 
 module.exports = app => {
     const User = app.db.models.User;
+    const Institution = app.db.models.Institution;
     const cfg = app.libs.config;
 
     app.route("/user")
@@ -25,11 +26,25 @@ module.exports = app => {
         });
 
     app.post("/users/create", (req, res) => {
-        User.create(req.body)
-            .then(result => JSend.success(res, result))
-            .catch(error => {
-                JSend.failUnprocessableEntity(res,{msg: error.message});
+        if (req.body.email) {
+            const userDomain = req.body.email.substring(req.body.email.lastIndexOf("@") +1);
+            Institution.findOne({where: {emailDomain: userDomain}}).then(inst => {
+                if(inst){
+                    User.create(req.body)
+                        .then(result => JSend.success(res, result))
+                        .catch(error => {
+                            JSend.failUnprocessableEntity(res, error.message);
+                        });
+                } else {
+                    JSend.failUnprocessableEntity(res,"Your email doesn't belong to one of our Institutions");
+                }
+            }).catch(error => {
+                JSend.failUnprocessableEntity(res, error.message);
             });
+        } else {
+            JSend.failUnprocessableEntity(res,"email is missing or not valid");
+        }
+
     });
 
     app.post("/users/signin", (req, res) => {
