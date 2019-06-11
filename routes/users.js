@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import JSend from '../services/Jsend'
 
 module.exports = app => {
     const User = app.db.models.User;
@@ -7,27 +8,27 @@ module.exports = app => {
     app.route("/user")
         .all(app.auth.authenticate())
         .get((req, res) => {
-            Users.findById(req.user.id, {
+            User.findByPk(req.user.id, {
                 attributes: ["id", "name", "email"]
             })
-                .then(result => res.json(result))
+                .then(result => JSend.success(res, result))
                 .catch(error => {
-                    res.status(412).json({msg: error.message});
+                    JSend.failUnprocessableEntity(res,{msg: error.message});
                 });
         })
         .delete((req, res) => {
-            Users.destroy({where: {id: req.user.id}})
-                .then(result => res.sendStatus(204))
+            User.destroy({where: {id: req.user.id}})
+                .then(result => JSend.successWithoutResponse(res))
                 .catch(error => {
-                    res.status(412).json({msg: error.message});
+                    JSend.failUnprocessableEntity(res,{msg: error.message});
                 });
         });
 
     app.post("/users/create", (req, res) => {
         User.create(req.body)
-            .then(result => res.json(result))
+            .then(result => JSend.success(res, result))
             .catch(error => {
-                res.status(412).json({msg: error.message});
+                JSend.failUnprocessableEntity(res,{msg: error.message});
             });
     });
 
@@ -38,12 +39,11 @@ module.exports = app => {
             User.findOne({where: {email: email}})
                 .then(user => {
                     if (User.isPassword(user.password, password)) {
-                        const payload = {id: user.id};
-                        res.json({
+                        JSend.success(res, {
                             token: jwt.sign({id: user.id}, cfg.jwtSecret)
                         });
                     } else {
-                        res.sendStatus(401);
+                        JSend.failNotAuthorized(res)
                     }
                 })
                 .catch(error => res.json({msg: error.message}));

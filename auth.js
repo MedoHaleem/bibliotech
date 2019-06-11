@@ -2,14 +2,14 @@ import passport from "passport";
 import {Strategy, ExtractJwt} from "passport-jwt";
 
 module.exports = app => {
-    const Users = app.db.models.Users;
+    const User = app.db.models.User;
     const cfg = app.libs.config;
     const params = {
         secretOrKey: cfg.jwtSecret,
         jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
     };
     const strategy = new Strategy(params, (payload, done) => {
-        Users.findById(payload.id)
+        User.findByPk(payload.id)
             .then(user => {
                 if (user) {
                     return done(null, {
