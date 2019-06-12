@@ -27,7 +27,7 @@ exports.failWithNotFound = (res, message = "Not Found") => {
 
 
 exports.failNotAuthorized= (res, message = "Unauthorized") => {
-    return res.status(403).json({
+    return res.status(401).json({
         status : "error",
         message : message
     })

@@ -4,7 +4,9 @@
   "description": "A coding challenge to assess your ability to navigate an express server implementation.",
   "main": "index.js",
   "scripts": {
-    "start": "babel-node index.js"
+    "start": "babel-node index.js",
+    "test": "SET NODE_ENV=test&& mocha test/**/*.spec.js --exit",
+    "linux-test": "export NODE_ENV=test && mocha test/**/*.spec.js"
   },
   "author": "",
   "license": "ISC",
@@ -25,6 +27,9 @@
     "@babel/node": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
     "@babel/register": "^7.4.4",
-    "faker": "^4.1.0"
+    "chai": "^4.2.0",
+    "faker": "^4.1.0",
+    "mocha": "^6.1.4",
+    "supertest": "^4.0.2"
   }
 }

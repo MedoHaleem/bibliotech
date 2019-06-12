@@ -63,9 +63,9 @@ module.exports = app => {
                         JSend.failNotAuthorized(res)
                     }
                 })
-                .catch(error => res.json({msg: error.message}));
+                .catch(error =>  JSend.failNotAuthorized(res, error));
         } else {
-            res.sendStatus(401);
+            JSend.failNotAuthorized(res)
         }
     });
 };
