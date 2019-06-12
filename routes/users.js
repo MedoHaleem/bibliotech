@@ -30,8 +30,10 @@ module.exports = app => {
             const userDomain = req.body.email.substring(req.body.email.lastIndexOf("@") +1);
             Institution.findOne({where: {emailDomain: userDomain}}).then(inst => {
                 if(inst){
-                    User.create(req.body)
-                        .then(result => JSend.success(res, result))
+                    User.create({...req.body, InstitutionId: inst.id})
+                        .then(result => {
+                            JSend.success(res, result)
+                        })
                         .catch(error => {
                             JSend.failUnprocessableEntity(res, error.message);
                         });

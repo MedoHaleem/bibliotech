@@ -29,6 +29,10 @@ module.exports = (sequelize, DataTypes) => {
         role: {
             type: DataTypes.ENUM,
             values: ["student", "academic", "administrator"]
+        },
+        InstitutionId: {
+            type: DataTypes.INTEGER,
+            allowNull: false
         }
     }, {
         hooks: {

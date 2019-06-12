@@ -6,7 +6,7 @@ module.exports = {
         return queryInterface.bulkInsert('Institutions', [{
             name: 'University of Liver Pool',
             url: 'www.liverpool.ac.uk',
-            emailDomain: '@liverpool.ac.uk',
+            emailDomain: 'liverpool.ac.uk',
             createdAt: new Date(),
             updatedAt: new Date()
         },

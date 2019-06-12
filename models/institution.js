@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Institution.associate = function(models) {
     // associations can be defined here
+    Institution.belongsToMany(models.Book, {through: 'InstitutionBooks'});
   };
   return Institution;
 };
