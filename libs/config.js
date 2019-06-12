@@ -6,7 +6,7 @@ module.exports = () => {
     const env = process.env.NODE_ENV;
     if (env) {
         const config =  require(`../config/config.${env}.js`);
-        // we load dbconfig and destructure it here so Sequelize-Cli can access connection options depending on the env
+        // we load dbconfig and destructure it here so Sequelize-Cli can access connection options depending on the env currently running
         return {...dbConfig, ...config}
     } else {
         const defaultConfig =  require(`../config/config.development.js`);
