@@ -33,7 +33,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
+    }).then(() => queryInterface.addIndex('Users', ['email']))
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('Users');

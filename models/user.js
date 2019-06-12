@@ -33,8 +33,9 @@ module.exports = (sequelize, DataTypes) => {
         InstitutionId: {
             type: DataTypes.INTEGER,
             allowNull: false
-        }
+        },
     }, {
+        indexes: [{unique: true, fields: ['email']}],
         hooks: {
             beforeCreate: user => {
                 const salt = bcrypt.genSaltSync();
