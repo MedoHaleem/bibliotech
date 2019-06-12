@@ -5,7 +5,11 @@ module.exports = app => {
     const User = app.db.models.User;
     const Institution = app.db.models.Institution;
     const cfg = app.libs.config;
-
+    //Usually I don't write any business logic inside routes file instead  I use a controller to verify the params get result from service file and send the response, the service file which handle the business logic/ call db models
+    // ex:
+    // app.route('/customers/')
+    //     .all(app.auth.authenticate())
+    //     .get(CustomerController.getAllCustomers)
     app.route("/user")
         .all(app.auth.authenticate())
         .get((req, res) => {
@@ -57,6 +61,8 @@ module.exports = app => {
                 .then(user => {
                     if (User.isPassword(user.password, password)) {
                         JSend.success(res, {
+                            //We can encode expiresIn, so the token expires after specific amount of time to reduce the opportunity of the attack of the token got compromised
+                            //not added here for simplicity, personally I prefer to delegate the authentication to 3rd party service like Auth0
                             token: jwt.sign({id: user.id}, cfg.jwtSecret)
                         });
                     } else {
