@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "babel-node index.js",
+    "clusters": "babel-node clusters.js",
     "test": "SET NODE_ENV=test&& mocha test/**/*.spec.js --exit",
     "linux-test": "export NODE_ENV=test && mocha test/**/*.spec.js"
   },
@@ -13,7 +14,9 @@
   "dependencies": {
     "bcrypt": "^3.0.6",
     "consign": "^0.1.6",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
+    "helmet": "^3.18.0",
     "jsonwebtoken": "^8.5.1",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
